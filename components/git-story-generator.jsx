@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -85,7 +86,8 @@ export function GitStoryGeneratorComponent() {
       navigator.clipboard.writeText(story)
       toast({
         title: "Copied!",
-        description: "The story has been copied to your clipboard.",
+        description: "The story has bee
+        n copied to your clipboard.",
         variant: "success",
       })
     }
@@ -94,9 +96,11 @@ export function GitStoryGeneratorComponent() {
   return (
     <div className="min-h-screen bg-[#1E1B4B] flex flex-col items-center justify-center p-8 gap-8">
       <div className="flex flex-col items-center gap-4">
-        <img
+        <Image
           src="/api/placeholder/128/128"
           alt="Coding Cat"
+          width={128}
+          height={128}
           className="w-32 h-32 object-contain" />
         <h1 className="text-4xl font-bold text-white text-center">
           HEY LET'S COMMIT A STORY
