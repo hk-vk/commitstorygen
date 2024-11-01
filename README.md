@@ -23,8 +23,7 @@ For Software:
 - Tools Used:-VS Code, OpenAI API, Github API
 # Your Project Title
 
-A brief description of your project goes here. Explain what your project does and its purpose.
-
+CommitStoryGen transforms your development journey into a story by analyzing your project's commit history. Designed for developers and teams, it highlights progress, key milestones, and significant changes. This web app extracts commit messages from your repository, generating a cohesive narrative that aids retrospectives, project insights, and team collaboration. With a clean, interactive UI , CommitStoryGen brings your code's evolution to life. Built on Next.js, it offers a seamless experience to review, reflect, and share your project’s story—one commit at a time.
 ## Installation
 
 To install the necessary packages, run the following command:
@@ -39,21 +38,29 @@ npm run dev
 
 ## Project Documentation
 ### Screenshots
-![Homepage Screenshot](Add screenshot 1 here) This screenshot showcases the homepage of CommitStoryGen
-![image](https://github.com/user-attachments/assets/f2eab13b-9239-425e-bedc-95a9e9d60f81)
 
 
-![Commit Analysis Page](Add screenshot 2 here) This screenshot highlights the commit analysis feature.
-![image](https://github.com/user-attachments/assets/de1bc25d-9a2b-4fe1-9f8c-0f4424325e04)
+![Homepage Screenshot](https://github.com/user-attachments/assets/28d98afc-d649-4167-a31d-3b3f5ce58bb4)  
+This screenshot showcases the homepage of CommitStoryGen.
 
-![Story Generation](Add screenshot 3 here) This screenshot shows the generated story based on commit history.
-![image](https://github.com/user-attachments/assets/703a23cd-151c-40cf-96a5-1a9c88d9bb87)
+![Commit Analysis Page](https://github.com/user-attachments/assets/de1bc25d-9a2b-4fe1-9f8c-0f4424325e04)  
+This screenshot highlights the commit analysis feature.
+
+![Story Generation](https://github.com/user-attachments/assets/703a23cd-151c-40cf-96a5-1a9c88d9bb87)  
+This screenshot shows the generated story based on commit history.
+
+---
+
 
 
 
 ## Project Demo
-Video
-[Add your demo video link here] This video demonstrates the full functionality of CommitStoryGen, from commit analysis to story output.
+### Video
+
+This video demonstrates the full functionality of CommitStoryGen, from commit analysis to story output.
+
+https://github.com/user-attachments/assets/4b3d6ce8-644e-41f9-b726-2c563407f29b
+
 
 Additional Demos
 (Add any extra demo materials/links if applicable)
