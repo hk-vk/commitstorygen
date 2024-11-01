@@ -95,12 +95,12 @@ export function GitStoryGeneratorComponent() {
   return (
     <div className="min-h-screen bg-[#1E1B4B] flex flex-col items-center justify-center p-8 gap-8">
       <div className="flex flex-col items-center gap-4">
-        <Image
+        {/* <Image
           src="/api/placeholder/128/128"
           alt="Coding Cat"
           width={128}
           height={128}
-          className="w-32 h-32 object-contain" />
+          className="w-32 h-32 object-contain" /> */}
         <h1 className="text-4xl font-bold text-white text-center">
           HEY LET'S COMMIT A STORY
         </h1>
@@ -165,12 +165,21 @@ export function GitStoryGeneratorComponent() {
                 {descriptiveness}% - {descriptiveness < 33 ? 'Concise' : descriptiveness < 66 ? 'Balanced' : 'Detailed'}
               </div>
             </div>
-            <Button
-              type="submit"
-              className="w-full bg-white/10 hover:bg-white/20 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200"
-              disabled={isLoading}>
-              {isLoading ? 'Generating Story...' : 'Generate Story'}
-            </Button>
+            <div className="flex gap-4">
+              <Button
+                type="submit"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200"
+                disabled={isLoading}>
+                {isLoading ? 'Generating Story...' : 'Generate Story'}
+              </Button>
+              <Button
+                type="button"
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200"
+                onClick={() => window.open(`https://github.com/${parseGitHubUrl(repoUrl).owner}/${parseGitHubUrl(repoUrl).repo}/commits`, '_blank')}
+                disabled={!repoUrl}>
+                Commit Timeline
+              </Button>
+            </div>
           </form>
         </CardContent>
       </Card>
