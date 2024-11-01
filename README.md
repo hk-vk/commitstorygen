@@ -21,7 +21,7 @@ For Software:
 - Next JS
 - shadcn
 - Tools Used:-VS Code, OpenAI API, Github API
-# Your Project Title
+# CommitStoryGen
 
 CommitStoryGen transforms your development journey into a story by analyzing your project's commit history. Designed for developers and teams, it highlights progress, key milestones, and significant changes. This web app extracts commit messages from your repository, generating a cohesive narrative that aids retrospectives, project insights, and team collaboration. With a clean, interactive UI , CommitStoryGen brings your code's evolution to life. Built on Next.js, it offers a seamless experience to review, reflect, and share your project’s story—one commit at a time.
 ## Installation
