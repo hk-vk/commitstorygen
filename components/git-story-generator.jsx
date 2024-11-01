@@ -86,8 +86,7 @@ export function GitStoryGeneratorComponent() {
       navigator.clipboard.writeText(story)
       toast({
         title: "Copied!",
-        description: "The story has bee
-        n copied to your clipboard.",
+        description: "The story has been copied to your clipboard.",
         variant: "success",
       })
     }
