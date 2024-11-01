@@ -8,7 +8,8 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
-import { Github } from "lucide-react"
+import { Github, AlertCircle } from "lucide-react"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 export function GitStoryGeneratorComponent() {
   const [repoUrl, setRepoUrl] = useState('')
@@ -16,47 +17,115 @@ export function GitStoryGeneratorComponent() {
   const [descriptiveness, setDescriptiveness] = useState(50)
   const [story, setStory] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  const parseGitHubUrl = (url) => {
+    try {
+      const regex = /github\.com\/([^\/]+)\/([^\/]+)/
+      const matches = url.match(regex)
+      if (!matches) throw new Error('Invalid GitHub URL format')
+      return { owner: matches[1], repo: matches[2] }
+    } catch (error) {
+      throw new Error('Please enter a valid GitHub repository URL')
+    }
+  }
+
+  const fetchCommits = async (owner, repo) => {
+    try {
+      const response = await fetch(
+        `https://api.github.com/repos/${owner}/${repo}/commits?per_page=100`,
+        {
+          headers: {
+            'Accept': 'application/vnd.github.v3+json',
+            // Add your GitHub token here if needed
+            // 'Authorization': `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`
+          }
+        }
+      )
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch commits')
+      }
+
+      const commits = await response.json()
+      return commits.map(commit => ({
+        hash: commit.sha.substring(0, 7),
+        message: commit.commit.message,
+        author: commit.commit.author.name,
+        date: new Date(commit.commit.author.date).toISOString()
+      }))
+    } catch (error) {
+      throw new Error('Error fetching commits: ' + error.message)
+    }
+  }
+
+  const generateStory = async (commits) => {
+    try {
+      const response = await fetch('/api/generate-story', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          commits,
+          genre,
+          descriptiveness
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to generate story')
+      }
+
+      const data = await response.json()
+      return data.story
+    } catch (error) {
+      throw new Error('Error generating story: ' + error.message)
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsLoading(true)
+    setError('')
+    setStory('')
     
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      setStory(
-        `Once upon a time in the ${genre} realm of code, a project was born...\n\n` +
-                 `Developers collaborated with ${descriptiveness}% attention to detail, ` +
-                 `writing intricate code and pushing thoughtful commits...\n\n` +
-                 `Through ${descriptiveness < 50 ? 'brief encounters' : 'elaborate challenges'} and ` +
-                 `${descriptiveness < 50 ? 'quick' : 'hard-fought'} triumphs, the software evolved...\n\n` +
-                 `And so, the ${genre} tale of this GitHub repository unfolded, one commit at a time, ` +
-                 `with ${descriptiveness}% richness in its narrative tapestry.`
-      )
+      // Parse GitHub URL
+      const { owner, repo } = parseGitHubUrl(repoUrl)
+      
+      // Fetch commits
+      const commits = await fetchCommits(owner, repo)
+      
+      if (commits.length === 0) {
+        throw new Error('No commits found in this repository')
+      }
+      
+      // Generate story
+      const generatedStory = await generateStory(commits)
+      setStory(generatedStory)
     } catch (error) {
-      console.error('Error generating story:', error)
-      setStory('An error occurred while generating the story. Please try again.')
+      setError(error.message)
+      setStory('')
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    (<div
-      className="min-h-screen bg-[#1E1B4B] flex flex-col items-center justify-center p-8 gap-8">
+    <div className="min-h-screen bg-[#1E1B4B] flex flex-col items-center justify-center p-8 gap-8">
       <div className="flex flex-col items-center gap-4">
         <img
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202024-11-01%20at%2014.53.54_fddc266d-iOqHhfg11fbRNHNqLB4KHHk5JlG9He.jpg"
+          src="/api/placeholder/128/128"
           alt="Coding Cat"
           className="w-32 h-32 object-contain" />
         <h1 className="text-4xl font-bold text-white text-center">
           HEY LETS COMMIT A STORY
         </h1>
       </div>
-      <Card
-        className="w-full max-w-2xl bg-[#1E1B4B]/50 backdrop-blur-sm border-white/10 shadow-xl rounded-xl overflow-hidden">
+      <Card className="w-full max-w-2xl bg-[#1E1B4B]/50 backdrop-blur-sm border-white/10 shadow-xl rounded-xl overflow-hidden">
         <CardHeader className="space-y-1 p-6 bg-white/5">
-          <CardTitle
-            className="text-2xl font-bold text-center text-white flex items-center justify-center gap-2">
+          <CardTitle className="text-2xl font-bold text-center text-white flex items-center justify-center gap-2">
             <Github className="w-6 h-6" />
             Git Story Generator
           </CardTitle>
@@ -65,6 +134,14 @@ export function GitStoryGeneratorComponent() {
           </CardDescription>
         </CardHeader>
         <CardContent className="p-6">
+          {error && (
+            <Alert variant="destructive" className="mb-6 bg-red-900/50 border-red-500/50">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                {error}
+              </AlertDescription>
+            </Alert>
+          )}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="repo-url" className="text-gray-200">GitHub Repository URL</Label>
@@ -123,6 +200,8 @@ export function GitStoryGeneratorComponent() {
             className="min-h-[200px] bg-white/10 border-white/10 text-white placeholder-gray-400 focus:border-white/20 focus:bg-white/20 rounded-md resize-none" />
         </CardFooter>
       </Card>
-    </div>)
-  );
+    </div>
+  )
 }
+
+export default GitStoryGeneratorComponent
