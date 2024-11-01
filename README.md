@@ -40,7 +40,7 @@ npm run dev
 ## Project Documentation
 ### Screenshots
 ![Homepage Screenshot](Add screenshot 1 here) This screenshot showcases the homepage of CommitStoryGen
-![image](https://github.com/user-attachments/assets/d558c35c-8c0b-4b10-9a09-87368aa0ee39)
+![image](https://github.com/user-attachments/assets/f2eab13b-9239-425e-bedc-95a9e9d60f81)
 
 
 ![Commit Analysis Page](Add screenshot 2 here) This screenshot highlights the commit analysis feature.
