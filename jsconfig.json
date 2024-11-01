@@ -1,7 +1,14 @@
 {
   "compilerOptions": {
+    "target": "es5", // or your preferred target
+    "module": "commonjs", // or your preferred module system
+    "baseUrl": ".", // Set base URL to the root of your project
     "paths": {
-      "@/*": ["./*"]
-    }
-  }
+      "@/*": ["./*"] // Alias for importing files from the root
+    },
+    "strict": true, // Optional: enable strict type-checking options
+    "jsx": "preserve" // Keep JSX as is for Next.js
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"], // Include TypeScript files
+  "exclude": ["node_modules"] // Exclude node_modules
 }
