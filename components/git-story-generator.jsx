@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
-import { Github, AlertCircle } from "lucide-react"
+import { GitBranch, AlertCircle } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
 export function GitStoryGeneratorComponent() {
@@ -30,80 +30,34 @@ export function GitStoryGeneratorComponent() {
     }
   }
 
-  const fetchCommits = async (owner, repo) => {
-    try {
-      const response = await fetch(
-        `https://api.github.com/repos/${owner}/${repo}/commits?per_page=100`,
-        {
-          headers: {
-            'Accept': 'application/vnd.github.v3+json',
-            // Add your GitHub token here if needed
-            // 'Authorization': `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`
-          }
-        }
-      )
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch commits')
-      }
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setError('')
+    setStory('')
 
-      const commits = await response.json()
-      return commits.map(commit => ({
-        hash: commit.sha.substring(0, 7),
-        message: commit.commit.message,
-        author: commit.commit.author.name,
-        date: new Date(commit.commit.author.date).toISOString()
-      }))
-    } catch (error) {
-      throw new Error('Error fetching commits: ' + error.message)
-    }
-  }
-
-  const generateStory = async (commits) => {
     try {
+      const { owner, repo } = parseGitHubUrl(repoUrl)
       const response = await fetch('/api/generate-story', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          commits,
+          owner,
+          repo,
           genre,
-          descriptiveness
+          descriptiveness,
         }),
       })
 
       if (!response.ok) {
-        throw new Error('Failed to generate story')
+        const errorData = await response.json().catch(() => null)
+        throw new Error(errorData?.message || 'Failed to generate story')
       }
 
       const data = await response.json()
-      return data.story
-    } catch (error) {
-      throw new Error('Error generating story: ' + error.message)
-    }
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError('')
-    setStory('')
-    
-    try {
-      // Parse GitHub URL
-      const { owner, repo } = parseGitHubUrl(repoUrl)
-      
-      // Fetch commits
-      const commits = await fetchCommits(owner, repo)
-      
-      if (commits.length === 0) {
-        throw new Error('No commits found in this repository')
-      }
-      
-      // Generate story
-      const generatedStory = await generateStory(commits)
-      setStory(generatedStory)
+      setStory(data.story)
     } catch (error) {
       setError(error.message)
       setStory('')
@@ -120,13 +74,13 @@ export function GitStoryGeneratorComponent() {
           alt="Coding Cat"
           className="w-32 h-32 object-contain" />
         <h1 className="text-4xl font-bold text-white text-center">
-          HEY LETS COMMIT A STORY
+          HEY LET'S COMMIT A STORY
         </h1>
       </div>
       <Card className="w-full max-w-2xl bg-[#1E1B4B]/50 backdrop-blur-sm border-white/10 shadow-xl rounded-xl overflow-hidden">
         <CardHeader className="space-y-1 p-6 bg-white/5">
           <CardTitle className="text-2xl font-bold text-center text-white flex items-center justify-center gap-2">
-            <Github className="w-6 h-6" />
+            <GitBranch className="w-6 h-6" />
             Git Story Generator
           </CardTitle>
           <CardDescription className="text-gray-300 text-center">
