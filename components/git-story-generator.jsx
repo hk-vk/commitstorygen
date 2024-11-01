@@ -2,21 +2,21 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { Button } from "../components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Slider } from "@/components/ui/slider"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../components/ui/card"
+import { Input } from "../components/ui/input"
+import { Label } from "../components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select"
+import { Slider } from "../components/ui/slider"
 import { GitBranch, AlertCircle, Copy , Cat} from "lucide-react"
-import { Textarea } from "@/components/ui/textarea"
-import { useToast } from '@/hooks/use-toast'
+import { Textarea } from "../components/ui/textarea"
+import { useToast } from '../hooks/use-toast'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog"
+} from "../components/ui/dialog"
 
 export function GitStoryGeneratorComponent() {
   const [repoUrl, setRepoUrl] = useState('')
