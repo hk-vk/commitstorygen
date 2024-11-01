@@ -1,15 +1,21 @@
 'use client'
-
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
-import { GitBranch, AlertCircle } from "lucide-react"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { GitBranch, AlertCircle, Copy } from "lucide-react"
+import { Textarea } from "@/components/ui/textarea"
+import { useToast } from '@/hooks/use-toast'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog"
 
 export function GitStoryGeneratorComponent() {
   const [repoUrl, setRepoUrl] = useState('')
@@ -18,6 +24,8 @@ export function GitStoryGeneratorComponent() {
   const [story, setStory] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const { toast } = useToast()
 
   const parseGitHubUrl = (url) => {
     try {
@@ -58,11 +66,28 @@ export function GitStoryGeneratorComponent() {
 
       const data = await response.json()
       setStory(data.story)
+      setIsDialogOpen(true)
+      toast({
+        title: "Story Generated!",
+        description: "Your story has been generated successfully.",
+        variant: "default",
+      })
     } catch (error) {
       setError(error.message)
       setStory('')
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const handleCopyToClipboard = () => {
+    if (story) {
+      navigator.clipboard.writeText(story)
+      toast({
+        title: "Copied!",
+        description: "The story has been copied to your clipboard.",
+        variant: "success",
+      })
     }
   }
 
@@ -77,6 +102,7 @@ export function GitStoryGeneratorComponent() {
           HEY LET'S COMMIT A STORY
         </h1>
       </div>
+
       <Card className="w-full max-w-2xl bg-[#1E1B4B]/50 backdrop-blur-sm border-white/10 shadow-xl rounded-xl overflow-hidden">
         <CardHeader className="space-y-1 p-6 bg-white/5">
           <CardTitle className="text-2xl font-bold text-center text-white flex items-center justify-center gap-2">
@@ -89,12 +115,10 @@ export function GitStoryGeneratorComponent() {
         </CardHeader>
         <CardContent className="p-6">
           {error && (
-            <Alert variant="destructive" className="mb-6 bg-red-900/50 border-red-500/50">
+            <div className="alert alert-error mb-6 bg-red-900/50 border-red-500/50 flex items-center gap-2">
               <AlertCircle className="h-4 w-4" />
-              <AlertDescription>
-                {error}
-              </AlertDescription>
-            </Alert>
+              <span>{error}</span>
+            </div>
           )}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
@@ -146,14 +170,35 @@ export function GitStoryGeneratorComponent() {
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="flex flex-col items-stretch p-6 bg-white/5">
-          <Textarea
-            value={story}
-            readOnly
-            placeholder="Your generated story will appear here..."
-            className="min-h-[200px] bg-white/10 border-white/10 text-white placeholder-gray-400 focus:border-white/20 focus:bg-white/20 rounded-md resize-none" />
-        </CardFooter>
       </Card>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="bg-[#1E1B4B] text-white border-white/10 max-w-2xl max-h-[80vh]">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold flex items-center gap-2">
+              <GitBranch className="w-6 h-6" />
+             Sit Back and Enjoy the Story😉
+            </DialogTitle>
+            <DialogDescription className="text-gray-300">
+              Based on your repository's commit history
+            </DialogDescription>
+          </DialogHeader>
+          <div className="mt-4 space-y-4">
+            <Textarea
+              value={story}
+              readOnly
+              className="min-h-[300px] bg-white/10 border-white/10 text-white placeholder-gray-400 focus:border-white/20 focus:bg-white/20 rounded-md resize-none"
+            />
+            <Button
+              onClick={handleCopyToClipboard}
+              className="w-full bg-white/10 hover:bg-white/20 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 flex items-center justify-center gap-2"
+            >
+              <Copy className="h-5 w-5" />
+              Copy to Clipboard
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
