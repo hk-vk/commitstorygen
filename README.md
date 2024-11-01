@@ -1,66 +1,63 @@
-# CommitStoryGen
+# COMMIT STORY GENE 🎯
+## Basic Details
+### Team Name: Sabhash
+### Team Members
+Team Lead: Harikrishnan V K - [College]
+Member 2: Savitha G S - [College]
+Member 3: Abhirami K S - [College]
+### Project Description
+CommitStoryGen transforms commit history into a narrative, providing a unique perspective on development journeys.
 
-CommitStoryGen leverages commit history to build a storyline for your development journey. It can be especially useful for:
+### The Problem (that doesn't exist)
+Tracking development progress is often informative, but what if you could turn it into a story worth telling?
 
-- **Analyzing development progress**
-- **Creating summaries for project retrospectives**
-- **Sharing meaningful insights with team members**
+### The Solution  (that nobody asked for)
+CommitStoryGen uses commit messages to generate a project storyline, giving every developer’s journey a bit of flair and storytelling magic.
 
-### Features
-
-- **Commit Analysis**: Extracts messages from your repository’s commit history to craft a coherent narrative.
-- **Story Generation**: Produces a project story, highlighting milestones and significant changes.
-- **Interactive UI**: Simple, elegant UI for seamless interaction.
-- **Custom Animations**: Adds dynamic visual appeal with animations to enrich the storytelling experience.
-
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
----
-
-## Getting Started
-
-Ensure you have:
-
-- **Node.js** (v16.x or above recommended)
-- **npm**, **yarn**, or **pnpm** for package management
-
-To get the development server running:
-
-```bash
+## Technical Details
+### Technologies/Components Used
+For Software:
+- Javascript, React
+- Next JS
+- shadcn,OpenAI API,Github API
+- [Tools used]
+Installation
+bash
+Copy code
+npm install
+Run
+bash
+Copy code
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Project Documentation
+Screenshots
+![Homepage Screenshot](Add screenshot 1 here) This screenshot showcases the homepage of CommitStoryGen.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![Commit Analysis Page](Add screenshot 2 here) This screenshot highlights the commit analysis feature.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+![Story Generation](Add screenshot 3 here) This screenshot shows the generated story based on commit history.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Diagrams
+![Workflow](Add your workflow/architecture diagram here) Illustrates the flow from commit history extraction to story generation.
 
----
+Project Demo
+Video
+[Add your demo video link here] This video demonstrates the full functionality of CommitStoryGen, from commit analysis to story output.
 
-## Learn More
+Additional Demos
+(Add any extra demo materials/links if applicable)
 
-To learn more about Next.js, take a look at the following resources:
+Team Contributions
+Harikrishnan V K: Project lead, backend setup, and core commit analysis development.
+Savitha G S: Frontend development, UI/UX design, and component styling.
+Abhirami K S: Story generation logic, animations, and documentation.
+Made with ❤️ at TinkerHub Useless Projects
 
-- [Next.js Documentation](https://nextjs.org/docs) - Learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - An interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
----
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
----
 
-This README provides clear instructions and insights, formatted to match the specified layout.
+
