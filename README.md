@@ -1,10 +1,10 @@
 # COMMIT STORY GEN🎯
 ## Basic Details
-### Team Name: Sabhash
+### Team Name: SABHASH
 ### Team Members
-Team Lead: Harikrishnan V K - [Government Engineering College Idukki]
-Member 2: Savitha G S - [Government Engineering College Idukki]
-Member 3: Abhirami K S - [Government Engineering College Idukki]
+- Team Lead: Harikrishnan V K - [Government Engineering College Idukki]
+- Member 2: Savitha G S - [Government Engineering College Idukki]
+- Member 3: Abhirami K S - [Government Engineering College Idukki]
 ### Project Description
 CommitStoryGen transforms commit history into a narrative, providing a unique perspective on development journeys.
 
