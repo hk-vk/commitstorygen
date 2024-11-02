@@ -35,6 +35,12 @@ To Run the Application
 ```
 npm run dev
 ```
+### Environments Variables
+Add the necessary environment variables in the .env.local file
+```
+GITHUB_TOKEN=
+GOOGLE_AI_KEY=
+```
 
 ## Project Documentation
 ### Screenshots
